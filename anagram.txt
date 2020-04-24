@@ -1,0 +1,78 @@
+<html>
+        <head>
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <script>
+                function submitToAPI(e) {
+                   // alert('Inside Function');
+                   
+                    e.preventDefault();
+                    var URL = "https://d2brcbu324.execute-api.ap-south-1.amazonaws.com/dev/anagram";
+             
+                         var Wordre = /[A-Za-z]/;
+                         if (!Wordre.test($("#word-input").val())) {
+                                      alert ("Please enter a word with at least 2 chars");
+                             return;
+                         }
+                        
+                    var word = $("#word-input").val();
+                   // alert(word);
+                    
+                    var data = {
+                       word : word,
+                    };
+             
+                    $.ajax({
+                      type: "POST",
+                      url : "https://d2brcbu324.execute-api.ap-south-1.amazonaws.com/dev/anagram",
+                      dataType: "json",
+                      crossDomain: "true",
+                      contentType: "application/json; charset=utf-8",
+                      data: JSON.stringify(data),
+                      
+             
+                      
+                      success: function (data) {
+                        // clear form and show a success message
+                       // alert("Successfull");
+                      //  console.log(data);
+                        //console.log(data.status);
+                       // alert("Successfull");
+                       // window.location.href = "anagram.html"
+                       document.getElementById("contact-form").reset();
+                       //location.reload();
+                       $("#anagrams").append('Anagrams for the provided word are')
+                       $("#anagrams").append(JSON.stringify(data))
+                        
+                    
+                      },
+                      error: function () {
+                        // show an error message
+                        alert("UnSuccessfull");
+                      }});
+                  }
+                </script>
+            </head>
+
+<title>Welcome to Anagram Solver</title>
+
+<body>
+
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+<div id="form">
+<form id="contact-form" method="post" style="background-color:lightblue">
+      
+      <input type="text" style="height:35px;" id="word-input" placeholder="Type a word here…" class="form-control" style="width:100%;" /><br/>
+      <h4>Enter A Word:</h4><h6>Example: Madam</h6>
+      <button type="button" align="center" onClick="submitToAPI(event)" class="btn btn-lg" style="margin-top:20px;">Submit</button>
+</form>
+</div>
+<div id="anagrams" item-width="100%" style="background-color:lightblue; position: relative; overflow-x:auto;">
+
+</div>
+</body>
+</html>

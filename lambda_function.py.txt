@@ -1,0 +1,35 @@
+import json
+
+
+
+def toString(List): 
+    return ''.join(List) 
+  
+def permute(a, l, r, result):
+    
+    if l == r: 
+        #print(toString(a))
+        result.append(toString(a))
+    else: 
+        for i in range(l, r + 1): 
+            a[l], a[i] = a[i], a[l] 
+            permute(a, l + 1, r,result)
+            a[l], a[i] = a[i], a[l] # backtrack 
+
+def lambda_handler(event, context):
+    
+    result = []
+    print(event)
+    #print(type(event))
+    print(event['word'])
+    #event_dict = json.loads(event)
+    #print(event['word'])
+    # Driver program to test the above function 
+    string = event['word']
+    n = len(string) 
+    a = list(string) 
+    permute(a, 0, n-1,result)
+    print(result)
+    return(result)
+   
+    
